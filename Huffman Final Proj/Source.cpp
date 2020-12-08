@@ -3,6 +3,7 @@
 #include <queue>
 #include <unordered_map>
 #include <iomanip>
+#include <fstream>
 using namespace std;
 
 #define EMPTY_STRING ""
@@ -173,7 +174,16 @@ void buildHuffmanTree(string text)
 // Huffman coding algorithm
 int main()
 {
-	string text = "Huffman coding is a data compression algorithm.";
+	string text = "";
+	ifstream file("input1.txt");
+	if (file.is_open()) {
+		string line = "";
+		while (getline(file, line)) {
+			text += line;
+		}
+		file.close();
+	}
+
 	buildHuffmanTree(text);
 
 	system("PAUSE");
