@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <iomanip>
 #include <fstream>
+#include <bitset>
 using namespace std;
 
 #define EMPTY_STRING ""
@@ -84,11 +85,11 @@ void decode(Node* root, int &index, string str)
 }
 
 // Builds Huffman Tree and decode given input text
-void buildHuffmanTree(string text)
+string buildHuffmanTree(string text)
 {
 	// base case: empty string
 	if (text == EMPTY_STRING) {
-		return;
+		return text;
 	}
 
 	// count frequency of appearance of each character
@@ -169,11 +170,57 @@ void buildHuffmanTree(string text)
 			decode(root, index, str);
 		}
 	}
+	return str;
 }
+
+// Converts string of 8 huffman codes into char
+char byteToChar(string byte) {
+	bitset<8> temp(byte);
+	return temp.to_ulong();
+}
+
+// Compresses the encoded string
+string compress(string str) {
+	string text = "";
+	for (int i = 0; i < str.length(); i += 8) {
+		if (i + 8 >= str.length()) 
+			break;
+		char character = byteToChar(str.substr(i, i + 8));
+		text += character;
+	}
+	return text;
+}
+
+// Reads a file and writes the encoded string into an output file
+void encodeFile(string fileName) {
+	//Read a file
+	string text = "";
+	ifstream file(fileName);
+	if (file.is_open()) {
+		string line = "";
+		while (getline(file, line)) {
+			text += line;
+		}
+		file.close();
+	}
+	//Encode the file into a new binary file
+	ofstream outputFile("encoded" + fileName, ios::out | ios::binary);
+	if (!outputFile) {
+		cout << "Cannot open file" << endl;
+		return;
+	}
+	string compressedStr = compress(buildHuffmanTree(text));
+	for (int i = 0; i < compressedStr.length(); i++) {
+		outputFile << compressedStr[i];
+	}
+	outputFile.close();
+}
+
 
 // Huffman coding algorithm
 int main()
 {
+	/*
 	string text = "";
 	ifstream file("input1.txt");
 	if (file.is_open()) {
@@ -183,8 +230,14 @@ int main()
 		}
 		file.close();
 	}
+	*/
+	//encodeFile("1", text);
+	//buildHuffmanTree(text); //build the encoded string
+	//compress(buildHuffmanTree(text)); //compress the encoded string
 
-	buildHuffmanTree(text);
+	encodeFile("input1.txt");
+
+
 
 	system("PAUSE");
 	return 0;
