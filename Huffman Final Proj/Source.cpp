@@ -9,7 +9,7 @@ using namespace std;
 
 #define EMPTY_STRING ""
 
-// A Tree node
+// TREE NODE
 struct Node
 {
 	char ch;
@@ -17,7 +17,7 @@ struct Node
 	Node *left, *right;
 };
 
-// Function to allocate a new tree node
+// ALLOCATE NEW TREE NODE
 Node* getNode(char ch, int freq, Node* left, Node* right)
 {
 	Node* node = new Node();
@@ -30,7 +30,7 @@ Node* getNode(char ch, int freq, Node* left, Node* right)
 	return node;
 }
 
-// Comparison object to be used to order the heap
+// COMPARE TO ORDER THE HEAP
 struct comp
 {
 	bool operator()(Node* l, Node* r)
@@ -40,12 +40,12 @@ struct comp
 	}
 };
 
-// Utility function to check if Huffman Tree contains only a single node
+// CHECK IF HUFFMAN TREE CONTAINS ONLY ONE NODE
 bool isLeaf(Node* root) {
 	return root->left == nullptr && root->right == nullptr;
 }
 
-// Traverse the Huffman Tree and store Huffman Codes in a map.
+// TRAVERSE HUFFMAN TREE AND STORE CODES IN A MAP
 void encode(Node* root, string str, unordered_map<char, string> &huffmanCode)
 {
 	if (root == nullptr) {
@@ -61,7 +61,7 @@ void encode(Node* root, string str, unordered_map<char, string> &huffmanCode)
 	encode(root->right, str + "1", huffmanCode);
 }
 
-// Traverse the Huffman Tree and decode the encoded string
+// TRAVERSE HUFFMAN TREE AND DECODE THE ENCODED STRING
 void decode(Node* root, int &index, string str)
 {
 	if (root == nullptr) {
@@ -84,7 +84,7 @@ void decode(Node* root, int &index, string str)
 	}
 }
 
-// Builds Huffman Tree and decode given input text
+// BUILDS HUFFMAN TREE AND DECODES
 string buildHuffmanTree(string text)
 {
 	// base case: empty string
@@ -163,8 +163,7 @@ string buildHuffmanTree(string text)
 	}
 	else
 	{
-		// Traverse the Huffman Tree again and this time
-		// decode the encoded string
+		// Decode the encoded string
 		int index = -1;
 		while (index < (int)str.size() - 1) {
 			decode(root, index, str);
@@ -173,7 +172,7 @@ string buildHuffmanTree(string text)
 	return str;
 }
 
-// Converts string of 8 huffman codes into char
+// Convert to byte
 char byteToChar(string byte) {
 	bitset<8> temp(byte);
 	return temp.to_ulong();
@@ -183,15 +182,15 @@ char byteToChar(string byte) {
 string compress(string str) {
 	string text = "";
 	for (int i = 0; i < str.length(); i += 8) {
-		if (i + 8 >= str.length()) 
+		if (i + 8 >= str.length())
 			break;
-		char character = byteToChar(str.substr(i, i + 8));
-		text += character;
+		char ch = byteToChar(str.substr(i, i + 8));
+		text += ch;
 	}
 	return text;
 }
 
-// Reads a file and writes the encoded string into an output file
+// Reads file and stores encoded string in binary file
 void encodeFile(string fileName) {
 	//Read a file
 	string text = "";
@@ -216,28 +215,47 @@ void encodeFile(string fileName) {
 	outputFile.close();
 }
 
+// Decompress encoded string
+string charToByte(char ch) {
+	bitset<8> temp(ch);
+	return temp.to_string();
+}
+
+// Reads encoded file and decompresses and decodes
+void decodeFile(string fileName) {
+	// Read in the encoded file
+	ifstream encodedFile("encoded" + fileName, ios::in | ios::binary);
+	string text = "";
+	if (encodedFile.is_open()) {
+		char c;
+		while (encodedFile.good()) {
+			encodedFile.get(c);
+			text += charToByte(c);
+		}
+		encodedFile.close();
+	}
+	// Decode the string using the Huffman Tree
+	
+	// Output decoded string into the decoded file
+	ofstream outputFile("decoded" + fileName, ios::out);
+	if (!outputFile) {
+		cout << "Cannot open file" << endl;
+		return;
+	}
+	for (int i = 0; i < text.length(); i++) {
+		outputFile << text[i];
+	}
+	outputFile.close();
+}
+
 
 // Huffman coding algorithm
 int main()
 {
-	/*
-	string text = "";
-	ifstream file("input1.txt");
-	if (file.is_open()) {
-		string line = "";
-		while (getline(file, line)) {
-			text += line;
-		}
-		file.close();
+	for (int i = 1; i <= 20; i++) {
+		string fileName = "input" + to_string(i) + ".txt";
+		encodeFile(fileName);
 	}
-	*/
-	//encodeFile("1", text);
-	//buildHuffmanTree(text); //build the encoded string
-	//compress(buildHuffmanTree(text)); //compress the encoded string
-
-	encodeFile("input1.txt");
-
-
 
 	system("PAUSE");
 	return 0;

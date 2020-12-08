@@ -23,5 +23,62 @@
     <Text Include="input1.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="input2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input3.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input4.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input5.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input6.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input7.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input8.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input9.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input10.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input11.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input12.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input13.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input14.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input15.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input16.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input17.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input18.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input19.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="input20.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
